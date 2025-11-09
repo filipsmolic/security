@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --configuration production",
+    "build:prod": "ng build --configuration production --output-path=dist/vulnerable-web-app",
     "watch": "ng build --watch --configuration development"
   },
   "private": true,
