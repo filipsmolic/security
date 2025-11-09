@@ -1,0 +1,111 @@
+<div class="container">
+  <div class="card">
+    <h1>1. SQL Injection</h1>
+
+    <div class="warning" *ngIf="vulnerableModeSQL">
+      RANJIV NAČIN
+    </div>
+    <div class="success" *ngIf="!vulnerableModeSQL">
+      SIGURAN NAČIN
+    </div>
+
+    <div class="form-group">
+      <label for="searchQuery">Pretraži korisnika:</label>
+      <input 
+        type="text" 
+        id="searchQuery"
+        [(ngModel)]="searchQuery"
+        placeholder="Unesite korisničko ime"
+        (keyup.enter)="searchUsers()">
+    </div>
+
+    <div class="form-group">
+      <label>
+        <input 
+          type="checkbox" 
+          [(ngModel)]="vulnerableModeSQL"
+          (change)="toggleSQL()">
+        Omogući SQL Injection ranjivost
+      </label>
+    </div>
+
+    <button class="btn" (click)="searchUsers()">Pretraži</button>
+
+    <div style="margin-top: 20px;">
+      <h3 style="font-size: 16px; margin-bottom: 10px;">SQL Injection primjeri:</h3>
+      <ul>
+        <li *ngFor="let example of sqlInjectionExamples" 
+            style="cursor: pointer; padding: 5px; margin-bottom: 5px;"
+            (click)="setExample(example)">
+          <strong>{{ example.name }}:</strong> <small>{{ example.query }}</small>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="showResults">
+    <h2>Rezultati</h2>
+
+    <div style="background: #f8f9fa; padding: 10px; margin-bottom: 15px;  font-size: 13px;">
+      <strong>SQL upit:</strong><br>
+      {{ queryExecuted }}
+    </div>
+
+    <table *ngIf="searchResults.length > 0">
+      <thead>
+        <tr>
+          <th *ngFor="let column of getColumns()">{{ column }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let result of searchResults">
+          <td *ngFor="let column of getColumns()">{{ result[column] }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p *ngIf="searchResults.length === 0">Nema rezultata.</p>
+  </div>
+
+  <div class="card">
+    <h1>2. Broken Access Control</h1>
+
+    <div class="warning" *ngIf="vulnerableModeAccess">
+      RANJIV NAČIN
+    </div>
+    <div class="success" *ngIf="!vulnerableModeAccess">
+      SIGURAN NAČIN
+    </div>
+
+    <div style="padding: 10px; margin-bottom: 15px; background: #f8f9fa; border-radius: 5px;">
+      <div style="margin-bottom: 10px;">
+        <strong>Trenutni korisnik:</strong> {{ currentUser?.username || 'john' }} (ID: {{ currentUser?.user_id || 2 }}, role: {{ currentUser?.role || 'user' }})
+        <button class="btn" (click)="openUserProfile(2)" style="padding: 5px 15px; font-size: 13px; margin-left: 15px;">Moj profil</button>
+      </div>
+      <div *ngIf="!vulnerableModeAccess" style="font-size: 12px; color: #666; word-break: break-all;">
+        <strong>JWT Token:</strong><br>
+        <code style="background: #e9ecef; padding: 5px; display: inline-block; max-width: 100%; overflow-x: auto;">{{ authToken || 'Loading...' }}</code>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>
+        <input 
+          type="checkbox" 
+          [(ngModel)]="vulnerableModeAccess"
+          (change)="toggleAccessControl()">
+        Omogući Broken Access Control
+      </label>
+    </div>
+
+    <div style="margin-top: 20px;">
+      <h3 style="font-size: 16px; margin-bottom: 10px;">Upute za testiranje:</h3>
+      
+      <div style="background: #fff; border: 1px solid #ddd; padding: 15px; margin-bottom: 15px;">
+        <h4 style="margin-bottom: 10px;">1. Pristupi tuđim podacima</h4>
+        <p>Nakon klika na "Moj profil", pokušajte pristupiti podatcima drugih korisnika mijenjanjem id-ja u url-u. (npr. /user/3)</p>
+      </div>
+    </div>
+  </div>
+</div>
+

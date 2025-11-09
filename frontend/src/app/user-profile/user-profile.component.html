@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <h1>Korisnički profil</h1>
+      <button class="btn" (click)="goBack()">Natrag</button>
+    </div>
+
+    <div *ngIf="!loading && error" class="error-box">
+      <p>{{ error }}</p>
+    </div>
+
+    <div *ngIf="!loading && userData && !error">
+      <div *ngIf="userData.is_vulnerable" class="warning">
+        <h3>RANJIV NAČIN</h3>
+      </div>
+      <div *ngIf="!userData.is_vulnerable" class="success">
+        <h3>SIGURAN NAČIN</h3>
+      </div>
+
+      <div class="user-info">
+        <div class="info-row">
+          <div class="info-label">ID:</div>
+          <div class="info-value">{{ userData.id }}</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Username:</div>
+          <div class="info-value">{{ userData.username }}</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Email:</div>
+          <div class="info-value">{{ userData.email }}</div>
+        </div>
+        <div class="info-row" *ngIf="userData.password">
+          <div class="info-label">Password:</div>
+          <div class="info-value">
+            <span class="info-value">{{ userData.password }}</span>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Role:</div>
+          <div class="info-value">
+              {{ userData.role }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
