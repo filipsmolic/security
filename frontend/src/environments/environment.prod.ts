@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: "placeholder",
+  apiUrl: "https://security-backend-mr1s.onrender.com",
 };
