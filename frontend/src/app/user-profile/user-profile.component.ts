@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ActivatedRoute, Router } from "@angular/router";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { environment } from "../../environments/environment";
 
 interface UserData {
   id: number;
@@ -22,7 +23,7 @@ interface UserData {
   styleUrls: ["./user-profile.component.css"],
 })
 export class UserProfileComponent implements OnInit {
-  apiUrl = "http://localhost:8000";
+  apiUrl = environment.apiUrl;
   userId: number = 0;
   userData: UserData | null = null;
   loading: boolean = true;

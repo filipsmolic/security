@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
+import { environment } from "../../environments/environment";
 
 interface SQLInjectionResponse {
   results: any[];
@@ -19,7 +20,7 @@ interface SQLInjectionResponse {
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent {
-  apiUrl = "http://localhost:8000";
+  apiUrl = environment.apiUrl;
 
   searchQuery: string = "";
   vulnerableModeSQL: boolean = false;

@@ -6,6 +6,7 @@ from typing import List, Optional
 from sqlalchemy.orm import Session
 import jwt
 from datetime import datetime, timedelta
+import os
 
 from database import get_db, get_raw_connection, User, Product
 
@@ -14,9 +15,18 @@ ALGORITHM = "HS256"
 
 app = FastAPI(title="Vulnerable Web App - Security Lab")
 
+allowed_origins = [
+    "http://localhost:4200",
+    "http://127.0.0.1:4200",
+]
+
+frontend_url = os.getenv("FRONTEND_URL")
+if frontend_url:
+    allowed_origins.append(frontend_url)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200", "http://127.0.0.1:4200"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
